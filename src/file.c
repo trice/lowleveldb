@@ -9,7 +9,7 @@
 // Private helper
 bool file_exists(char* filename) {
     int fd = open(filename, O_RDONLY);
-    bool result = fd == -1;
+    bool result = fd != -1;
     close(fd);
     return result;
 }
