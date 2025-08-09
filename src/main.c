@@ -31,6 +31,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (file_path == NULL) {
+        printf("filepath is required\n");
         print_usage(argv);
         return EXIT_FAILURE;
     }
