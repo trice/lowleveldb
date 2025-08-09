@@ -1,4 +1,4 @@
-#ifdef __FILE_H
+#ifndef __FILE_H
 #define __FILE_H
 
 int open_db_file(char* filename);
