@@ -17,6 +17,7 @@ int main(int argc, char *argv[]) {
     bool new_file = false;
     char* file_path = NULL;
     int db_fd = DB_INVALID_DESCRIPTOR;
+    struct dbheader_t* dbh = NULL;
 
     int c;
     while ((c = getopt(argc, argv, "nf:")) != -1) {
@@ -53,9 +54,13 @@ int main(int argc, char *argv[]) {
             printf("could not open %s\n", file_path);
             return EXIT_FAILURE;
         }
+
+        if (validate_db_header(db_fd, &dbh) != STATUS_SUCCESS) {
+            printf("Invalid header\n");
+            return EXIT_FAILURE;
+        };
     }
 
-    struct dbheader_t* dbh = NULL;
     if (create_db_header(db_fd, &dbh)==STATUS_SUCCESS) {
         output_file(db_fd, dbh, NULL);
     }
