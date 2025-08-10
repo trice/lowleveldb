@@ -68,9 +68,14 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
     }
 
     *headerOut = db_header;
-    return STATUS_FAILURE;
+    return STATUS_SUCCESS;
 }
-// int read_employees(int fd, struct dbheader_t *, struct employee_t **employeesOut);
+
+
+int read_employees(int fd, struct dbheader_t *, struct employee_t **employeesOut) {
+
+    return STATUS_SUCCESS;
+}
 
 
 int output_file(int fd, struct dbheader_t *dbh, struct employee_t *employees) {
@@ -84,16 +89,13 @@ int output_file(int fd, struct dbheader_t *dbh, struct employee_t *employees) {
         return STATUS_FAILURE;
     }
 
-    struct dbheader_t header_out =
-    {
-        htonl(dbh->magic),
-        htons(dbh->version),
-        htons(dbh->count),
-        htonl(sizeof(struct dbheader_t) + (sizeof(struct employee_t) * dbh->count))
-    };
+    dbh->magic = htonl(dbh->magic);
+    dbh->version = htons(dbh->version);
+    dbh->count = htons(dbh->count);
+    dbh->filesize = htonl(sizeof(struct dbheader_t) + (sizeof(struct employee_t) * dbh->count));
 
     lseek(fd, 0, SEEK_SET);
-    write(fd, &header_out, sizeof(struct dbheader_t));
+    write(fd, dbh, sizeof(struct dbheader_t));
 
     for (int i=0; i < dbh->count; i++) {
         employees[i].hours = htonl(employees[i].hours);

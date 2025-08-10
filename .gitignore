@@ -56,6 +56,7 @@ dkms.conf
 
 # typical executable location
 **/bin/
+**/build/
 
 compile_commands.json
 
