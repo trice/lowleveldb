@@ -72,7 +72,24 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
 }
 
 
-int read_employees(int fd, struct dbheader_t *, struct employee_t **employeesOut) {
+int read_employees(int fd, struct dbheader_t *dbh, struct employee_t **employeesOut) {
+    if (fd < 0) {
+        printf("invalid file descriptor\n");
+        return STATUS_FAILURE;
+    }
+
+    lseek(fd, 0, SEEK_SET);
+    read(fd, dbh, sizeof(struct dbheader_t));
+
+    dbh->magic = ntohl(dbh->magic);
+    dbh->count = ntohs(dbh->count);
+    dbh->version = ntohs(dbh->version);
+    dbh->filesize = ntohl(dbh->filesize);
+
+    for (int i=0; i < dbh->count; i++) {
+        read(fd, &employeesOut[i], sizeof(struct employee_t));
+        employeesOut[i]->hours = ntohs(employeesOut[i]->hours);
+    }
 
     return STATUS_SUCCESS;
 }
