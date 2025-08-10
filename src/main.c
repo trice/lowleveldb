@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "file.h"
+#include "parse.h"
 
 void print_usage(char* argv[]) {
     printf("usage: %s -n -f <filepath>\n", argv[0]);
@@ -52,6 +53,11 @@ int main(int argc, char *argv[]) {
             printf("could not open %s\n", file_path);
             return EXIT_FAILURE;
         }
+    }
+
+    struct dbheader_t* dbh = NULL;
+    if (create_db_header(db_fd, &dbh)==STATUS_SUCCESS) {
+        output_file(db_fd, dbh, NULL);
     }
 
     close(db_fd);
