@@ -8,12 +8,6 @@
 #include <arpa/inet.h>
 #include <sys/stat.h>
 
-// struct dbheader_t {
-// 	unsigned int magic;
-// 	unsigned short version;
-// 	unsigned short count;
-// 	unsigned int filesize;
-// };
 int create_db_header(int fd, struct dbheader_t **headerOut) {
     struct dbheader_t* db_header = calloc(1, sizeof(struct dbheader_t));
     if (db_header == NULL) {
@@ -30,7 +24,6 @@ int create_db_header(int fd, struct dbheader_t **headerOut) {
 
     return STATUS_SUCCESS;
 }
-
 
 int validate_db_header(int fd, struct dbheader_t **headerOut) {
     if (fd < 0) {
@@ -50,6 +43,7 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
     ssize_t read_result = read(fd, db_header, sizeof(struct dbheader_t));
     if (read_result <=0) {
         perror("read");
+        free(db_header);
         return STATUS_FAILURE;
     }
 
