@@ -62,7 +62,8 @@ int main(int argc, char *argv[]) {
     }
 
     if (create_db_header(db_fd, &dbh)==STATUS_SUCCESS) {
-        output_file(db_fd, dbh, NULL);
+        // output_file(db_fd, dbh, NULL);
+        output_file(db_fd, dbh);
     }
 
     close(db_fd);

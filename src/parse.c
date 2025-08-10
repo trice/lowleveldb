@@ -89,7 +89,7 @@ int read_employees(int fd, struct dbheader_t *dbh, struct employee_t **employees
 }
 
 
-int output_file(int fd, struct dbheader_t *dbh, struct employee_t *employees) {
+int output_file(int fd, struct dbheader_t *dbh)/*, struct employee_t *employees)*/ {
     if (fd < 0) {
         printf("invalid file descriptor\n");
         return STATUS_FAILURE;
@@ -103,15 +103,15 @@ int output_file(int fd, struct dbheader_t *dbh, struct employee_t *employees) {
     dbh->magic = htonl(dbh->magic);
     dbh->version = htons(dbh->version);
     dbh->count = htons(dbh->count);
-    dbh->filesize = htonl(sizeof(struct dbheader_t) + (sizeof(struct employee_t) * dbh->count));
+    dbh->filesize = htonl(sizeof(struct dbheader_t));/* + (sizeof(struct employee_t) * dbh->count));*/
 
     lseek(fd, 0, SEEK_SET);
     write(fd, dbh, sizeof(struct dbheader_t));
 
-    for (int i=0; i < dbh->count; i++) {
-        employees[i].hours = htonl(employees[i].hours);
-        write(fd, &employees[i], sizeof(struct employee_t));
-    }
+    // for (int i=0; i < dbh->count; i++) {
+    //     employees[i].hours = htonl(employees[i].hours);
+    //     write(fd, &employees[i], sizeof(struct employee_t));
+    // }
 
     return STATUS_SUCCESS;
 }
