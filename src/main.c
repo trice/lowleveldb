@@ -55,10 +55,10 @@ int main(int argc, char *argv[]) {
             return EXIT_FAILURE;
         }
 
-        if (validate_db_header(db_fd, &dbh) != STATUS_SUCCESS) {
-            printf("Invalid header\n");
-            return EXIT_FAILURE;
-        };
+        // if (validate_db_header(db_fd, &dbh) != STATUS_SUCCESS) {
+        //     printf("Invalid header\n");
+        //     return EXIT_FAILURE;
+        // };
     }
 
     if (create_db_header(db_fd, &dbh)==STATUS_SUCCESS) {

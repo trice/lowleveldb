@@ -54,8 +54,8 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
 
     int result = 0;
     result |= stat_buf.st_size == db_header->filesize;
-    result |= db_header->magic == HEADER_MAGIC;
-    result |= db_header->version == 1;
+    result &= db_header->magic == HEADER_MAGIC;
+    result &= db_header->version == 1;
 
     if (!result) {
         return STATUS_FAILURE;
