@@ -66,5 +66,7 @@ int main(int argc, char *argv[]) {
     }
 
     close(db_fd);
+    free(dbh);
+
     return EXIT_SUCCESS;
 }
