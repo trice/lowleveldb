@@ -19,7 +19,7 @@ struct employee_t {
 int create_db_header(int fd, struct dbheader_t **headerOut);
 int validate_db_header(int fd, struct dbheader_t **headerOut);
 int read_employees(int fd, struct dbheader_t *, struct employee_t **employeesOut);
-// int output_file(int fd, struct dbheader_t *, struct employee_t *employees);
-int output_file(int fd, struct dbheader_t *dbh);
+int output_file(int fd, struct dbheader_t *, struct employee_t *employees);
+int add_employee(struct employee_t *employee, char* employee_data);
 
 #endif // !__PARSE_
